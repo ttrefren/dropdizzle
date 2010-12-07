@@ -1,0 +1,62 @@
+.dropdizzle {
+    font-family: 'Lucida Grande', 'Arial', sans-serif;
+    font-size: 11px;
+    color: #555555;
+    border-bottom: 1px solid #cfcfcf;
+    display: inline-block;
+}
+
+.dropdizzle img {
+    float: right;
+    margin: 9px;
+}
+
+.dropdizzle .title {
+    cursor: default;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    background: url(images/background.png) repeat-x;
+    border: 1px solid #cfcfcf;
+    border-bottom: none;
+    padding: 3px;
+    padding-left: 6px;
+    height: 15px;
+    min-width: 150px;
+    display: inline-block;
+}
+
+.dropdizzle .title .title_text {
+    float: left;
+}
+
+.dropdizzle .title .arrow {
+    float: right;
+    background: url(images/arrow.png) no-repeat center;
+    height: 17px;
+    width: 15px;
+}
+
+.dropdizzle ul {
+    display: none;
+    list-style: none;
+    background-color: #fff;
+    margin: -1px 0 0 0;
+    padding: 0px;
+
+    border: 1px solid #cfcfcf;
+    border-bottom: none;
+    
+}
+
+.dropdizzle ul li {
+    cursor: default;
+    padding: 2px 6px;
+}
+
+.dropdizzle ul li.selected {
+    font-weight: bold;
+}
+
+.dropdizzle ul li:hover {
+    background-color: #f7f7f7;
+}

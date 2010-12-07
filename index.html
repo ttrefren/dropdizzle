@@ -1,0 +1,28 @@
+<html>
+<head>
+    <link type="text/css" href="dropdizzle.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <script type="text/javascript" src="jquery.dropdizzle.js"></script>
+</head>
+<body>
+    <h1>Dropdizzle!</h1>
+    
+    <div class="dropdizzle">
+        <div class="title">State</div>
+        <ul>
+            <li>WA</li>
+            <li>CA</li>
+            <li>Arkansas</li>
+            <li val="3">Mississippiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        $(".dropdizzle").dropdizzle();
+        
+        $(".dropdizzle").change(function() {
+            console.log('changed!');
+            console.log($(this).attr('val'));
+        })
+    </script>
+</body>
+</html>
