@@ -25,6 +25,10 @@
     display: inline-block;
 }
 
+.dropdizzle .title:focus {
+    outline: none;
+}
+
 .dropdizzle .title .title_text {
     float: left;
 }
@@ -48,9 +52,15 @@
     
 }
 
+.dropdizzle ul:focus {
+    outline: none;
+}
+
 .dropdizzle ul li {
     cursor: default;
     padding: 2px 6px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
 }
 
 .dropdizzle ul li.selected {

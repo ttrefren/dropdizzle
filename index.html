@@ -6,23 +6,33 @@
 </head>
 <body>
     <h1>Dropdizzle!</h1>
+    <div id="wrapper">
+    <div id="states" class="dropdizzle">State</div>
+    <p>
+        <div id="cities">Cities</div>
+        
+        <input type="checkbox" />
     
-    <div class="dropdizzle">
-        <div class="title">State</div>
+    </div>
+        <!-- <div class="title">State</div>
         <ul>
             <li>WA</li>
             <li>CA</li>
             <li>Arkansas</li>
             <li val="3">Mississippiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii</li>
         </ul>
-    </div>
+    </div> -->
     <script type="text/javascript">
-        $(".dropdizzle").dropdizzle();
+        $("#states").dropdizzle(['WA', 'AK', [1, 'Mississippi']]);
         
         $(".dropdizzle").change(function() {
             console.log('changed!');
             console.log($(this).attr('val'));
         })
+        
+        
+        $("#cities").dropdizzle(['SF', 'NYC', 'Boston', 'Seattle'])
     </script>
 </body>
 </html>
+
