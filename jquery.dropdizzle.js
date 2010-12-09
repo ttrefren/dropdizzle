@@ -1,4 +1,13 @@
 (function($) {
+    /*
+        Dropdizzle - a jQuery plugin for making stylable dropdown menus.
+        (c) Tim Trefren
+            Mixpanel, Inc.
+            
+        issues:
+            dynamic width setting does not revert to original after being widened
+    
+    */
     function ce(e) {
         return $(document.createElement(e));
     }
@@ -6,12 +15,8 @@
     function is_array(obj) {
         return Object.prototype.toString.call(obj) === "[object Array]";
     }
-    
-    var blur_flags = {};
-    
+        
     function Dropdown(div, items) {
-        this.name = div[0].id;
-        console.log(div)
         this.wrapper = div.addClass('dropdizzle');
         this.title = ce('div').addClass('title').attr('tabindex', 0);
         this.items = new Items(items);
@@ -20,13 +25,15 @@
         this.title.html(this.title_text).append(ce('div').addClass('arrow'));  
         this.wrapper.html('').append(this.title).append(this.items.ul);
         
-        this.blur_flag = null;
         this.bindings();
+        this.styles();
         return this;
     }
     
     Dropdown.prototype.bindings = function() {
         var that = this;
+        
+        // Catch 'selected' event fired on item click
         this.wrapper.bind('selected', function(action) {
             var li = $(action.target),
                 val = li.attr('val') || li.text();
@@ -36,43 +43,34 @@
             
             that.title_text.html(li.text())
             that.wrapper.attr('val', val);
+            that.styles();
+            
             that.items.hide();
             that.items.blur();
+            
+            // Fire a 'change' event to listen for, on 
+            // the main dropdown div
             that.wrapper.trigger('change');
         });
         
         this.title.bind('focus', function() {
-            that.debug('title focus')
             that.items.focus();
-            clearTimeout(that.blur_flag);
         });
         
         this.title.mousedown(function() { 
-            that.debug('title mousedown')
-            clearTimeout(that.blur_flag);
-            if (!that.items.visible()) {
-                that.items.show();
-                that.items.focus();
-            } else {
-                that.items.hide();
-            }
+            that.items.toggle();
         });
         
         this.items.ul.blur(function() {
-            that.debug('on blur!')
-            that.blur_flag = setTimeout(function() {
-                that.items.hide();
-            }, 75);
-        });
-        
-        this.items.ul.focus(function() {
-            that.debug('on focus!')
+            that.items.hide();
         });
     };
     
-    Dropdown.prototype.debug = function(message) {
-        console.log(this.name + ' | ' + message);
-    }
+    Dropdown.prototype.styles = function() {
+        // Dynamically figure out the width of the dropdown 
+        var ul_width = Math.max(this.title.innerWidth(), this.items.ul.innerWidth())
+        this.items.ul.css({ 'width': '' + ul_width + 'px'});
+    };
     
     function Items(item_list) {
         this.ul = ce('ul').attr('tabindex', 0);

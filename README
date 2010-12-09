@@ -1,0 +1,19 @@
+Dropdizzle is a jQuery plugin for creating smart, stylable dropdown menus.
+
+Usage:
+
+<div id="cities">Cities</div>
+<script type="text/javascript">
+    // value == text of option
+    $("#cities").dropdizzle(['San Francisco', 'Seattle', 'New York', 'Atlanta']);
+    
+    // value == option[0], display == option[1]
+    $("#cities").dropdizzle([[0, 'San Francisco'], ['s', 'Seattle'], 'New York', 'Atlanta']);
+    
+    // Listen for change event
+    $("#cities").change(function() {
+        var val = $(this).attr('val');
+        console.log("Dropdown value: " + val)
+    });
+</script>
+    

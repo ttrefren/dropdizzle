@@ -4,6 +4,9 @@
     color: #555555;
     border-bottom: 1px solid #cfcfcf;
     display: inline-block;
+    
+    position: relative;
+    
 }
 
 .dropdizzle img {
@@ -23,6 +26,7 @@
     height: 15px;
     min-width: 150px;
     display: inline-block;
+    
 }
 
 .dropdizzle .title:focus {
@@ -48,8 +52,13 @@
     padding: 0px;
 
     border: 1px solid #cfcfcf;
-    border-bottom: none;
-    
+
+    position: absolute;
+    z-index: 4;
+}
+
+.dropdizzle.right ul {
+    right: 0px;
 }
 
 .dropdizzle ul:focus {
@@ -61,6 +70,7 @@
     padding: 2px 6px;
     -webkit-user-select:none;
     -moz-user-select:none;
+    white-space: nowrap;
 }
 
 .dropdizzle ul li.selected {

@@ -5,25 +5,22 @@
     <script type="text/javascript" src="jquery.dropdizzle.js"></script>
 </head>
 <body>
-    <h1>Dropdizzle!</h1>
+    <h1 tabindex="0">Dropdizzle!</h1>
+    <h1 tabindex="0">H!2</h1>
     <div id="wrapper">
     <div id="states" class="dropdizzle">State</div>
+    
+    <div id="states2" class="dropdizzle right" style="float: right">State</div>
+    
     <p>
         <div id="cities">Cities</div>
-        
-        <input type="checkbox" />
-    
+    </p>    
     </div>
-        <!-- <div class="title">State</div>
-        <ul>
-            <li>WA</li>
-            <li>CA</li>
-            <li>Arkansas</li>
-            <li val="3">Mississippiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii</li>
-        </ul>
-    </div> -->
+
     <script type="text/javascript">
-        $("#states").dropdizzle(['WA', 'AK', [1, 'Mississippi']]);
+        $("#states").dropdizzle(['WA', 'AK', [1, 'Mississippiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii']]);
+        
+        $("#states2").dropdizzle(['WA', 'AK', [1, 'Mississippiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiwasagroundhog']]);
         
         $(".dropdizzle").change(function() {
             console.log('changed!');
@@ -32,6 +29,7 @@
         
         
         $("#cities").dropdizzle(['SF', 'NYC', 'Boston', 'Seattle'])
+        
     </script>
 </body>
 </html>
