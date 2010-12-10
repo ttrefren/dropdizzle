@@ -16,7 +16,7 @@
         return Object.prototype.toString.call(obj) === "[object Array]";
     }
         
-    function Dropdown(div, items) {
+    function Dropdown(div, items, selected) {
         this.wrapper = div.addClass('dropdizzle');
         this.title = ce('div').addClass('title').attr('tabindex', 0);
         this.items = new Items(items);
@@ -24,33 +24,49 @@
         
         this.title.html(this.title_text).append(ce('div').addClass('arrow'));  
         this.wrapper.html('').append(this.title).append(this.items.ul);
+
         
         this.bindings();
         this.styles();
+
+		if (selected) {
+			this.onselect(this.items.ul.find('[val="' +  selected + '"]'), false);
+		}
+
+		if (this.wrapper.attr('val') === undefined) {
+			this.wrapper.attr('val', '');
+		}
+
         return this;
     }
     
+	Dropdown.prototype.onselect = function(target, change) {
+		var li = $(target),
+			val = li.attr('val'),
+			prev_val = this.wrapper.attr('val');
+		
+		li.siblings().removeClass('selected');
+		li.addClass('selected');
+		
+		this.title_text.html(li.text());
+		this.wrapper.attr('val', val);
+		this.styles();
+		if (change && (prev_val != val)) {
+            // Fire a 'change' event to listen for, on 
+            // the main dropdown div
+            this.wrapper.trigger('change');
+		}
+	};
+
     Dropdown.prototype.bindings = function() {
         var that = this;
         
         // Catch 'selected' event fired on item click
         this.wrapper.bind('selected', function(action) {
-            var li = $(action.target),
-                val = li.attr('val') || li.text();
-            
-            li.siblings().removeClass('selected');
-            li.addClass('selected');
-            
-            that.title_text.html(li.text())
-            that.wrapper.attr('val', val);
-            that.styles();
-            
+            that.onselect(action.target, true); 
             that.items.hide();
             that.items.blur();
             
-            // Fire a 'change' event to listen for, on 
-            // the main dropdown div
-            that.wrapper.trigger('change');
         });
         
         this.title.bind('focus', function() {
@@ -68,7 +84,7 @@
     
     Dropdown.prototype.styles = function() {
         // Dynamically figure out the width of the dropdown 
-        var ul_width = Math.max(this.title.innerWidth(), this.items.ul.innerWidth())
+        var ul_width = Math.max(this.title.innerWidth(), this.items.ul.innerWidth());
         this.items.ul.css({ 'width': '' + ul_width + 'px'});
     };
     
@@ -111,6 +127,7 @@
             li.attr('val', item[0]);
             li.html(item[1]);
         } else {
+            li.attr('val', item);
             li.html(item);
         }
         li.click(function() {
@@ -119,8 +136,9 @@
         return li;
     }
     
-    $.fn.dropdizzle = function(items) {
-        var dropdown = new Dropdown(this, items);
-        return this;
+    $.fn.dropdizzle = function(items, selected) {
+		// Need to be able to reload etc this thing, so we will break jquery convention and not return a jquery object.
+        return new Dropdown(this, items, selected);
     };
 })(jQuery);
+

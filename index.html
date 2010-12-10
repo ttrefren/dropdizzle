@@ -1,8 +1,12 @@
 <html>
 <head>
     <link type="text/css" href="dropdizzle.css" rel="stylesheet" />
+    <link type="text/css" href="hoverizzle.css" rel="stylesheet" />
+    
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
     <script type="text/javascript" src="jquery.dropdizzle.js"></script>
+    <script type="text/javascript" src="jquery.hoverizzle.js"></script>
+    
 </head>
 <body>
     <h1 tabindex="0">Dropdizzle!</h1>
@@ -11,6 +15,8 @@
     <div id="states" class="dropdizzle">State</div>
     
     <div id="states2" class="dropdizzle right" style="float: right">State</div>
+    
+    <div id="options" style="margin-left: 100px;">Options</div>
     
     <p>
         <div id="cities">Cities</div>
@@ -29,6 +35,9 @@
         
         
         $("#cities").dropdizzle(['SF', 'NYC', 'Boston', 'Seattle'])
+        
+        $("#options").hoverizzle(['<a href="delete.html">delete</a>', [1, 'not a link']])
+        
         
     </script>
 </body>
