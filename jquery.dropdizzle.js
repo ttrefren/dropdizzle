@@ -15,8 +15,56 @@
     function is_array(obj) {
         return Object.prototype.toString.call(obj) === "[object Array]";
     }
-        
-    function Dropdown(div, items, selected) {
+       
+    function Item(item) {
+        var li = ce('li');
+    
+        if (is_array(item)) {
+            li.attr('val', item[0]);
+            li.html(item[1]);
+        } else {
+            li.attr('val', item);
+            li.html(item);
+        }
+        li.click(function() {
+            li.trigger('selected');
+        });
+        return li;
+    }
+     
+    function Items(item_list) {
+        this.ul = ce('ul').attr('tabindex', 0);
+    
+        for (var i=0; i < item_list.length; i++) {
+            this.ul.append(new Item(item_list[i]));
+        }
+    }
+    
+    Items.prototype.toggle = function() {
+        this.ul.toggle();
+    };
+    
+    Items.prototype.hide = function() {
+        this.ul.hide();
+    };
+    
+    Items.prototype.show = function() {
+        this.ul.show();
+    };
+    
+    Items.prototype.visible = function() {
+        return this.ul.is(":visible");
+    };
+    
+    Items.prototype.focus = function() {
+        this.ul.focus();
+    };
+    
+    Items.prototype.blur = function() {
+        this.ul.blur();
+    };
+
+    function Dropdown(div, items, config) {
         this.wrapper = div.addClass('dropdizzle');
         this.title = ce('div').addClass('title').attr('tabindex', 0);
         this.items = new Items(items);
@@ -24,13 +72,15 @@
         
         this.title.html(this.title_text).append(ce('div').addClass('arrow'));  
         this.wrapper.html('').append(this.title).append(this.items.ul);
-
+        this.config = $.extend({
+            selected: false
+            }, config || {});
         
         this.bindings();
         this.styles();
 
-		if (selected) {
-			this.onselect(this.items.ul.find('[val="' +  selected + '"]'), false);
+		if (this.config.selected) {
+			this.onselect(this.items.ul.find('[val="' +  this.config.selected + '"]'), false);
 		}
 
 		if (this.wrapper.attr('val') === undefined) {
@@ -87,58 +137,10 @@
         var ul_width = Math.max(this.title.innerWidth(), this.items.ul.innerWidth());
         this.items.ul.css({ 'width': '' + ul_width + 'px'});
     };
-    
-    function Items(item_list) {
-        this.ul = ce('ul').attr('tabindex', 0);
-        
-        for (var i=0; i < item_list.length; i++) {
-            this.ul.append(new Item(item_list[i]));
-        }
-    }
-    
-    Items.prototype.toggle = function() {
-        this.ul.toggle();
-    };
-    
-    Items.prototype.hide = function() {
-        this.ul.hide();
-    };
-    
-    Items.prototype.show = function() {
-        this.ul.show();
-    };
-    
-    Items.prototype.visible = function() {
-        return this.ul.is(":visible");
-    };
-    
-    Items.prototype.focus = function() {
-        this.ul.focus();
-    };
-    
-    Items.prototype.blur = function() {
-        this.ul.blur();
-    };
-    
-    function Item(item) {
-        var li = ce('li');
-        
-        if (is_array(item)) {
-            li.attr('val', item[0]);
-            li.html(item[1]);
-        } else {
-            li.attr('val', item);
-            li.html(item);
-        }
-        li.click(function() {
-            li.trigger('selected');
-        });
-        return li;
-    }
-    
-    $.fn.dropdizzle = function(items, selected) {
+
+    $.fn.dropdizzle = function(items, config) {
 		// Need to be able to reload etc this thing, so we will break jquery convention and not return a jquery object.
-        return new Dropdown(this, items, selected);
+        return new Dropdown(this, items, config);
     };
 })(jQuery);
 

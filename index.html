@@ -18,6 +18,9 @@
     
     <div id="options" style="margin-left: 100px;">Options</div>
     
+    <div id="time" style="margin-left: 100px;">Time period</div>
+    
+    
     <p>
         <div id="cities">Cities</div>
     </p>    
@@ -33,11 +36,17 @@
             console.log($(this).attr('val'));
         })
         
+        $("#options").change(function() {
+            console.log('changed hover!');
+            console.log($(this).attr('val'));
+        })
+        
         
         $("#cities").dropdizzle(['SF', 'NYC', 'Boston', 'Seattle'])
         
         $("#options").hoverizzle(['<a href="delete.html">delete</a>', [1, 'not a link']])
         
+        $("#time").hoverizzle([['hour', 'Hour'],['day', 'Day'], ['week', 'Week']], { change_title: true });
         
     </script>
 </body>

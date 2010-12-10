@@ -57,6 +57,10 @@
     -moz-user-select:none;
 }
 
+.hoverizzle ul li.selected {
+    font-weight: bold;
+}
+
 .hoverizzle ul li:hover {
     background-color: #ebebeb;
     padding-left: 20px;
